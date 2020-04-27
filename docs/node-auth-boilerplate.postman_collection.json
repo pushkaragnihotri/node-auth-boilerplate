@@ -1,0 +1,90 @@
+{
+	"info": {
+		"_postman_id": "6b49daed-c0c1-4fd5-9d71-a199253ff0df",
+		"name": "node-auth-boilerplate",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/users/register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"email\": \"johndoe@mail.com\",\n    \"password\": \"p@ssw0rd\",\n    \"phoneNumber\": 9999999999\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/users/register",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/users/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"johndoe@mail.com\",\n    \"password\": \"p@ssw0rd\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/users/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/users/logout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/users/logout",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"id": "015f7c64-b44f-488c-a802-a254f3015542",
+			"key": "base_url",
+			"value": "http://localhost:3670",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
