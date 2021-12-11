@@ -32,7 +32,6 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
 	const { email, password } = req.body
 	const user = await UserModel.findOne({ email })
-	// console.log(user)
 	if (!user)
 		return res.status(404).json({
 			status: 'error',

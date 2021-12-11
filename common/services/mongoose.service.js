@@ -12,6 +12,7 @@ const options = {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 }
+
 const connectWithRetry = () => {
 	console.log('MongoDB connection with retry')
 	mongoose
