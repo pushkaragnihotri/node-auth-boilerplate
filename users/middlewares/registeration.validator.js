@@ -19,7 +19,7 @@ validateRegistrationParams = (req, res, next) => {
 	}
 	if (error)
 		return res.status(400).json({
-			status: 'error',
+			status: 'Bad Request',
 			message: error,
 		})
 	else next()

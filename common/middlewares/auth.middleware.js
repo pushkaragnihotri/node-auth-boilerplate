@@ -6,7 +6,7 @@ checkAuthorization = (req, res, next) => {
 	const token = req.cookies['accessToken']
 	if (!token)
 		return res.status(401).json({
-			status: 'Unauthorization error',
+			status: 'Unauthorized',
 			message: 'No Access token found',
 		})
 	try {
@@ -16,7 +16,7 @@ checkAuthorization = (req, res, next) => {
 		next()
 	} catch (e) {
 		return res.status(401).json({
-			status: 'Unauthorization error',
+			status: 'Unauthorized',
 			message: 'Invalid or expired token',
 		})
 	}

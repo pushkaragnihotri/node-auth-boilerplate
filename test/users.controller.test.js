@@ -33,7 +33,7 @@ describe('Users Controller APIs Tests', () => {
 					res.should.have.status(400)
 					res.body.should.be.a('object')
 					res.body.should.not.have.property('id')
-					res.body.should.have.property('status').eql('error')
+					res.body.should.have.property('status').eql('Bad Request')
 					res.body.should.have.property('message').eql('Invalid email format')
 					done()
 				})
@@ -47,7 +47,7 @@ describe('Users Controller APIs Tests', () => {
 					res.should.have.status(201)
 					res.body.should.be.a('object')
 					res.body.should.have.property('id')
-					res.body.should.have.property('status').eql('no error')
+					res.body.should.have.property('status').eql('OK')
 					res.body.should.have.property('message').eql('User created successfully!')
 					done()
 				})
@@ -62,7 +62,7 @@ describe('Users Controller APIs Tests', () => {
 					res.should.have.status(409)
 					res.body.should.be.a('object')
 					res.body.should.not.have.property('id')
-					res.body.should.have.property('status').eql('error')
+					res.body.should.have.property('status').eql('Conflict')
 					res.body.should.have.property('message').eql('Registration failed. Email is already registered!')
 					done()
 				})
@@ -70,7 +70,7 @@ describe('Users Controller APIs Tests', () => {
 	})
 
 	describe('POST /users/login', () => {
-		it('it should NOT ATHENTICATE an unregistere user and return statusCode 404', done => {
+		it('it should NOT ATHENTICATE an unregistered user and return statusCode 404', done => {
 			createDemoUser()
 			chai
 				.request(app)
@@ -79,7 +79,7 @@ describe('Users Controller APIs Tests', () => {
 				.end((err, res) => {
 					res.should.have.status(404)
 					res.body.should.be.a('object')
-					res.body.should.have.property('status').eql('error')
+					res.body.should.have.property('status').eql('Not Found')
 					res.body.should.have.property('message').eql('Authenticated failed. User not found!')
 					done()
 				})
@@ -93,7 +93,7 @@ describe('Users Controller APIs Tests', () => {
 				.end((err, res) => {
 					res.should.have.status(401)
 					res.body.should.be.a('object')
-					res.body.should.have.property('status').eql('error')
+					res.body.should.have.property('status').eql('Unauthorized')
 					res.body.should.have.property('message').eql('Authentication failed. Wrong password!')
 					done()
 				})
@@ -107,7 +107,7 @@ describe('Users Controller APIs Tests', () => {
 				.end((err, res) => {
 					res.should.have.status(200)
 					res.body.should.be.a('object')
-					res.body.should.have.property('status').eql('no error')
+					res.body.should.have.property('status').eql('OK')
 					res.body.should.have.property('message').eql('User authentication successfull!')
 					done()
 				})
