@@ -1,10 +1,13 @@
-let chai = require('chai')
-let chaiHttp = require('chai-http')
+const chai = require('chai')
+const chaiHttp = require('chai-http')
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const app = require('../server')
+const userModel = require('../users/models/users.model')
+const config = require('../common/config/env.config')
+
 var should = chai.should()
 chai.use(chaiHttp)
-let app = require('../server')
-let userModel = require('../users/models/users.model')
-const bcrypt = require('bcrypt')
 
 let newUser = {
 	firstName: 'John',
@@ -13,7 +16,16 @@ let newUser = {
 	password: 'p@ssw0rd',
 	phoneNumber: 9999999999,
 }
-let loginCredentials = { email: 'johndoe@mail.com', password: 'p@ssw0rd' }
+
+let loginCredentials = {
+	email: 'johndoe@mail.com',
+	password: 'p@ssw0rd',
+}
+
+createDemoUser = () => {
+	const encryptedPassword = bcrypt.hashSync(newUser.password, 10)
+	userModel.create({ ...newUser, password: encryptedPassword })
+}
 
 describe('Users Controller APIs Tests', () => {
 	beforeEach(done => {
@@ -113,9 +125,36 @@ describe('Users Controller APIs Tests', () => {
 				})
 		})
 	})
-})
 
-createDemoUser = () => {
-	const encryptedPassword = bcrypt.hashSync(newUser.password, 10)
-	userModel.create({ ...newUser, password: encryptedPassword })
-}
+	describe('POST /users/logout', () => {
+		it('it should NOT LOGOUT an unlogged-in user and return statusCode 401', done => {
+			chai
+				.request(app)
+				.post('/users/logout')
+				.end((err, res) => {
+					res.should.have.status(401)
+					res.body.should.be.a('object')
+					res.body.should.have.property('status').eql('Unauthorized')
+					res.body.should.have.property('message').eql('No Access token found')
+					done()
+				})
+		})
+		it('it should ATHENTICATE a valid user and return statusCode 200', done => {
+			const payload = { email: loginCredentials.email }
+			const secret = config.jwtSecret
+			const expiresIn = config.jwtExpirationInSeconds
+			const token = jwt.sign(payload, secret, { expiresIn })
+			chai
+				.request(app)
+				.post('/users/logout')
+				.set('Cookie', `accessToken=${token}`)
+				.end((err, res) => {
+					res.should.have.status(200)
+					res.body.should.be.a('object')
+					res.body.should.have.property('status').eql('OK')
+					res.body.should.have.property('message').eql('User logout successfully')
+					done()
+				})
+		})
+	})
+})

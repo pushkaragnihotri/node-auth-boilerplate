@@ -46,8 +46,8 @@ exports.login = async (req, res) => {
 		})
 
 	const payload = { email }
-	const secret = config.jwt_secret
-	const expiresIn = config.jwt_expiration_in_seconds
+	const secret = config.jwtSecret
+	const expiresIn = config.jwtExpirationInSeconds
 	const token = jwt.sign(payload, secret, { expiresIn })
 	res.cookie('accessToken', token)
 	return res.status(200).json({

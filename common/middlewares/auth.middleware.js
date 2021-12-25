@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const { jwt_secret } = require('../config/env.config')
+const { jwtSecret } = require('../config/env.config')
 
 checkAuthorization = (req, res, next) => {
 	// console.log(req.cookies)
@@ -10,7 +10,7 @@ checkAuthorization = (req, res, next) => {
 			message: 'No Access token found',
 		})
 	try {
-		const decoded = jwt.verify(token, jwt_secret)
+		const decoded = jwt.verify(token, jwtSecret)
 		// console.log(decoded)
 		req.user = decoded
 		next()

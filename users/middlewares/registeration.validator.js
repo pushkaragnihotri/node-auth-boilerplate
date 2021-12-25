@@ -10,7 +10,7 @@ validateRegistrationParams = (req, res, next) => {
 		error = 'Invalid email format'
 	} else if (!req.body.phoneNumber || req.body.phoneNumber.length == 0) {
 		error = 'Phone number cannot be empty'
-	} else if (req.body.phoneNumber.length !== 10) {
+	} else if (req.body.phoneNumber.toString().length !== 10) {
 		error = 'Invalid phone number'
 	} else if (!req.body.firstName || req.body.firstName.length == 0) {
 		error = 'First Name cannot be empty'
