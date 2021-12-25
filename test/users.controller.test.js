@@ -2,7 +2,7 @@ let chai = require('chai')
 let chaiHttp = require('chai-http')
 var should = chai.should()
 chai.use(chaiHttp)
-let app = require('../index')
+let app = require('../server')
 let userModel = require('../users/models/users.model')
 const bcrypt = require('bcrypt')
 
